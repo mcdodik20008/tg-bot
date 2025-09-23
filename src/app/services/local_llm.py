@@ -16,11 +16,13 @@ def _make_prompt(user_text: str, system: str) -> str:
         {"role": "system", "content": system},
         {"role": "user", "content": user_text},
     ]
-    return tok.apply_chat_template(
+    prompt = tok.apply_chat_template(
         messages,
         tokenize=False,
         add_generation_prompt=True,
     )
+    print(prompt)
+    return prompt
 
 
 def _postprocess(text: str) -> str:
@@ -50,7 +52,7 @@ def _build_pipe():
 
 async def generate_reply(
         user_text: str,
-        system: str = "Отвечай кратко и по делу на русском языке.",
+        system: str,
 ) -> str:
     pipe = _build_pipe()
     prompt = _make_prompt(user_text, system)
@@ -59,9 +61,6 @@ async def generate_reply(
         max_new_tokens=settings.llm_max_new_tokens,
         temperature=settings.llm_temperature,
         top_p=settings.llm_top_p,
-        do_sample=True,
         return_full_text=False,
-        pad_token_id=pipe.tokenizer.eos_token_id,
-        eos_token_id=pipe.tokenizer.eos_token_id,
     )[0]["generated_text"]
     return _postprocess(out)
