@@ -1,5 +1,4 @@
 from __future__ import annotations
-import asyncio
 import re
 from functools import lru_cache
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
