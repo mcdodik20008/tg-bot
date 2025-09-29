@@ -6,9 +6,9 @@ import os
 import re
 
 # --- НАСТРОЙКИ ---
-SEARCH_QUERY = "C# Разработчик"
-SEARCH_AREA = 1
-PAGES_TO_PARSE = 1
+SEARCH_QUERY = "Frontend Разработчик Angular"
+SEARCH_AREA = 113
+PAGES_TO_PARSE = 10
 # -----------------
 
 # Словарь для преобразования кода региона в название для файла
@@ -174,7 +174,7 @@ def save_to_csv(data, query, area_code):
     # Формируем имя файла из параметров
     query_slug = slugify(query)
     area_slug = AREA_MAP.get(area_code, str(area_code))
-    filename = f"resume_{query_slug}_{area_slug}.csv"
+    filename = f"resume_{query_slug}_{area_slug}_{PAGES_TO_PARSE*20}.csv"
     file_path = os.path.join(output_dir, filename)
 
     headers = data[0].keys()
